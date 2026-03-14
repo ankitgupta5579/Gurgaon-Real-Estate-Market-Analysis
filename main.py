@@ -12,8 +12,9 @@ df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
 df['price'] = df['price'].astype(str).str.replace(',', '').astype(float)
 df['area'] = df['area'].astype(str).str.replace(',', '').astype(int)
 df['rate_per_sqft'] = df['rate_per_sqft'].astype(str).str.replace(',', '').astype(int)
+# Remove impossible bhk_count values (like 114) by capping it to realistic values (e.g., <= 10)
+df = df[df['bhk_count'] <= 10]
 # print(df['rate_per_sqft'])
-
 #categorical columns cleaning
 df['status'] = df['status'].str.strip().str.lower()
 df['rera_approval'] = df['rera_approval'].str.strip().str.lower().map({'approved by rera': True, 'not approved by rera': False})
